@@ -1,9 +1,118 @@
-import React from 'react'
+import React, { useState, useRef } from "react";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
+import axios from "axios";
 
-const Editor = () => {
+const url = import.meta.env.VITE_BACKEND_URL;
+export default function Editor() {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [preview, setPreview] = useState(false);
+
+  const quillRef = useRef(null);
+
+  // Image Upload Handler
+  const handleImageUpload = async () => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const data = await axios.post(`${url}/api/upload`, formData);
+    
+      const imageUrl = data.url;
+
+      // Insert into editor
+      const quill = quillRef.current.getEditor();
+      const range = quill.getSelection();
+      quill.insertEmbed(range.index, "image", imageUrl);
+    };
+  };
+
+  // Toolbar modules
+  const modules = {
+    toolbar: {
+      container: [
+        [{ header: [1, 2, 3, false] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["blockquote", "code-block"],
+        ["link", "image"],
+        ["clean"],
+      ],
+      handlers: {
+        image: handleImageUpload,
+      },
+    },
+  };
+
+  // Save Post Handler
+  const handleSave = () => {
+    const blogPost = {
+      title,
+      content,
+    };
+
+    console.log("Saved Blog Post:", blogPost);
+    alert("Blog saved! Check console.");
+  };
+
   return (
-    <div>Editor</div>
-  )
-}
+    <div className="container">
+      <div className="row">
+        <div className="col-1"></div>
+        <div className="col-10">
+          <h2>Write a New Blog</h2>
 
-export default Editor
+          {/* Title */}
+          <input
+            type="text"
+            className="form-control my-3"
+            placeholder="Blog title..."
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+
+          {/* Editor */}
+          <ReactQuill
+            ref={quillRef}
+            theme="snow"
+            value={content}
+            onChange={setContent}
+            modules={modules}
+            placeholder="Start writing your blog..."
+            style={{ height: "300px", marginBottom: "50px" }}
+          />
+
+          {/* Buttons */}
+          <div style={{ display: "flex", gap: "10px" }}>
+            <button className="btn btn-success" onClick={handleSave}>
+              Save Blog
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={() => setPreview(!preview)}
+            >
+              {preview ? "Hide Preview" : "Show Preview"}
+            </button>
+          </div>
+
+          {/* Preview */}
+          {preview && (
+            <div
+              className="mt-4 p-3 border rounded"
+              dangerouslySetInnerHTML={{ __html: content }}
+            ></div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

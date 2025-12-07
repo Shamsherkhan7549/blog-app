@@ -1,8 +1,11 @@
 import React from 'react'
-
+import Editor from '../../components/Editor.jsx'
 const Home = () => {
   return (
-    <div>Home</div>
+    <div>
+      <Editor />
+      Home
+      </div>
   )
 }
 
