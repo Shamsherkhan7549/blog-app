@@ -20,9 +20,7 @@ const storage = multer.diskStorage({
 const uploadImage =  (req, res, next) => {  
   if (!req.file) return res.status(400).json({ error: 'No file' });
   const url = `${req.protocol}://${req.get('host')}/${uploadDir}/${req.file.filename}`;
-  req.imgUrl = url;
-  
-  next()
+  return res.status(200).json({success:true, imageUrl: url });  
 };
 
 export {storage, uploadImage};

@@ -6,10 +6,11 @@ import multer from 'multer';
 const upload = multer({ storage });
 
 const router = express.Router();
-router.post("/blogs",upload.single('image'),uploadImage, addBlog);
+router.post("/blogs", addBlog);
 router.get("/blogs", getAllBlogs);
 router.get("/blogs/:id", getSingleBlog);
 router.put("/blogs/:id", updateBlog);
 router.delete("/blogs/:id", deleteBlog);
+router.post("/upload", upload.single('image'), uploadImage);
 
 export default router;
