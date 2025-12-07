@@ -7,6 +7,7 @@ const url = import.meta.env.VITE_BACKEND_URL;
 export default function Editor() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
   const [preview, setPreview] = useState(false);
 
   const quillRef = useRef(null);
@@ -25,14 +26,21 @@ export default function Editor() {
       const formData = new FormData();
       formData.append("image", file);
 
-      const data = await axios.post(`${url}/api/upload`, formData);
-    
-      const imageUrl = data.url;
+      const {data} = await axios.post(`${url}/api/upload`, formData);
+      
+      if(data.success){
+        const imageUrl = data.imageUrl;
+        setImgUrl(imageUrl);
 
-      // Insert into editor
-      const quill = quillRef.current.getEditor();
-      const range = quill.getSelection();
-      quill.insertEmbed(range.index, "image", imageUrl);
+        // Insert into editor
+        const quill = quillRef.current.getEditor();
+        const range = quill.getSelection();
+        quill.insertEmbed(range.index, "image", imageUrl);
+        
+      }else{
+        console.log("problem in uploading image");
+        
+      }    
     };
   };
 
@@ -54,14 +62,28 @@ export default function Editor() {
   };
 
   // Save Post Handler
-  const handleSave = () => {
-    const blogPost = {
+  const handleSave = async () => {
+    try {
+      const blogPost = {
       title,
       content,
+      image: imgUrl
     };
+    const {data} = await axios.post(`${url}/api/blogs`, blogPost);
+    console.log(data);
+    
+    if(data.success){
+      alert("Blog saved!");
+    
+    }else{
+      alert("Blog Not saved!");
 
-    console.log("Saved Blog Post:", blogPost);
-    alert("Blog saved! Check console.");
+    }
+    } catch (error) {
+      console.error("Error saving blog post:", error);
+      alert("Failed to save blog. Check console for details.");
+      
+    }
   };
 
   return (

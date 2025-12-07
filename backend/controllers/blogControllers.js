@@ -2,11 +2,11 @@ import BLOG from "../models/blogModel.js";
 
 const addBlog = async (req, res) => {
     try {
-        const image = req.imgUrl; // get image URL from upload middleware
-        const { title, content} = req.body;
+       
+        const { title, content, image } = req.body;
         const blog = new BLOG({ title, content, image });        
         await blog.save();
-        res.status(201).json({sucess:true, data: blog });
+        res.status(201).json({success:true, data: blog });
     } catch (error) {
         res.status(500).json({success:false,  message:error.message });
     }

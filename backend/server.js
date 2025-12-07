@@ -6,12 +6,13 @@ import router from './routes/blogRoutes.js';
 
 configDotenv();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 const app = express();
 
 connectDb();
 
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
 app.use(cors({
     origin: '*',
