@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const url = import.meta.env.VITE_BACKEND_URL;
 export default function Editor() {
@@ -9,7 +10,7 @@ export default function Editor() {
   const [content, setContent] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const [preview, setPreview] = useState(false);
-
+  const navigate = useNavigate();
   const quillRef = useRef(null);
 
   // Image Upload Handler
@@ -68,13 +69,11 @@ export default function Editor() {
       title,
       content,
       image: imgUrl
-    };
-    const {data} = await axios.post(`${url}/api/blogs`, blogPost);
-    console.log(data);
-    
+    };    
+
+    const {data} = await axios.post(`${url}/api/blogs`, blogPost);    
     if(data.success){
-      alert("Blog saved!");
-    
+      navigate('/');
     }else{
       alert("Blog Not saved!");
 
@@ -87,10 +86,10 @@ export default function Editor() {
   };
 
   return (
-    <div className="container">
-      <div className="row">
+    <div className="container py-5">
+      <div className="row py-5">
         <div className="col-1"></div>
-        <div className="col-10">
+        <div className="col-12 col-sm-10">
           <h2>Write a New Blog</h2>
 
           {/* Title */}

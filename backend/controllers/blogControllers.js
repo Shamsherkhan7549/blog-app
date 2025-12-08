@@ -15,7 +15,7 @@ const addBlog = async (req, res) => {
 const getAllBlogs = async (req, res) => {
     try {
         const blogs = await BLOG.find();
-        res.status(200).json({sucess:true, data: blogs });
+        res.status(200).json({success:true, data: blogs });
     } catch (error) {
         res.status(500).json({success:false,  message:error.message });
     }
@@ -28,7 +28,7 @@ const getSingleBlog = async (req, res) => {
         if (!blog) {
             return res.status(404).json({success:false, message: "Blog not found" });
         }
-        res.status(200).json({sucess:true, data: blog });
+        res.status(200).json({success:true, data: blog });
     } catch (error) {
         res.status(500).json({success:false,  message:error.message });
     }
@@ -42,7 +42,7 @@ const updateBlog = async (req, res) => {
         if (!blog) {
             return res.status(404).json({success:false, message: "Blog not found" });
         }
-        res.status(200).json({sucess:true, data: blog });
+        res.status(200).json({success:true, data: blog });
     } catch (error) {
         res.status(500).json({success:false,  message:error.message });
     }
@@ -55,7 +55,7 @@ const deleteBlog = async (req, res) => {
         if (!blog) {
             return res.status(404).json({success:false, message: "Blog not found" });
         }
-        res.status(200).json({sucess:true, message: "Blog deleted successfully" });
+        res.status(200).json({success:true, message: "Blog deleted successfully" });
     } catch (error) {
         res.status(500).json({success:false,  message:error.message });
     }
