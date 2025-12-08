@@ -1,0 +1,43 @@
+
+.quill-display {
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.blog-img {
+  max-width: 80%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.quill-display p {
+  margin-bottom: 10px;
+}
+
+.quill-display h1,
+.quill-display h2,
+.quill-display h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.quill-display ul,
+.quill-display ol {
+  padding-left: 20px;
+}
+
+.quill-display blockquote {
+  border-left: 4px solid #ccc;
+  margin: 10px 0;
+  padding-left: 10px;
+  color: #555;
+}
+
+.quill-display pre {
+  background: #f4f4f4;
+  padding: 10px;
+  border-radius: 6px;
+  overflow-x: auto;
+}

@@ -30,6 +30,8 @@ const Home = () => {
   const getPreviewText = (html) => {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = html;
+    const h2 = tempDiv.querySelector('h2');
+    if(h2) h2.remove();       
     const text = tempDiv.textContent || tempDiv.innerText || "";
     return text.substring(0, 80) + "...";
   };
