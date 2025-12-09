@@ -6,6 +6,7 @@ import About from './pages/About/About.jsx'
 import Contact from './pages/Contact/Contact.jsx'
 import Editor from './components/Editor.jsx'
 import BlogDetails from './components/BlogDetails.jsx'
+import UpdateBlog from './components/UpdateBlog.jsx'
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path='/contact' element={<Contact />} />
         <Route path='/blog' element={<Editor />} />
         <Route path='/blog/:id' element={<BlogDetails />} />
+        <Route path='/update-blog/:id' element={<UpdateBlog />} />
       </Routes>
     </Router>
 
