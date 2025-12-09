@@ -44,7 +44,7 @@ const Home = () => {
           blogs &&
           blogs.map((blog) => (
 
-            <div key={blog._id} className="card col-lg-3 col-md-4 col-sm-6 col-10 mx-2 my-3" style={{ width: "18rem" }}>
+            <div key={blog._id} className="card col-lg-3 col-md-4 col-sm-6 col-12 mx-2 my-3" style={{ width: "18rem" }}>
               <img src={blog.image} className="card-img-top" alt="topic_image" />
               <div className="card-body">
                 <h5 className="card-title">{blog.title}</h5>

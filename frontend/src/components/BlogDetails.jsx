@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
 import './BlogDetails.css'
@@ -12,6 +12,7 @@ const BlogDetails = () => {
     const [blog, setBlog] = useState(null);
     const [blogInfo, setBlogInfo] = useState("");
 
+    const navigate = useNavigate();
 
     const extractContent = (html) => {
         const contentDiv = document.createElement("div");
@@ -42,6 +43,19 @@ const BlogDetails = () => {
         return text
     }
 
+    const handleDeleteBlog = async (blogId) => {
+        try {
+            const { data } = await axios.delete(`${url}/api/blogs/${blogId}`);
+            if (data.success) {
+                navigate("/");
+            }
+        } catch (error) {
+            console.error("Error deleting blog:", error);
+            alert("Failed to delete the blog. Please try again.");
+        }
+    }
+
+
     useEffect(() => {
         fetchById(id)
     }, [id]);
@@ -60,6 +74,10 @@ const BlogDetails = () => {
                                 </div>
                                
                                 <img className='blog-img' src={blogInfo.image} alt="blog_img" />
+                                <div className='buttons pt-3 d-flex gap-2 justify-content-end'>
+                                    <button type='button'  className="btn btn-primary ">Update</button>
+                                    <button onClick={()=>handleDeleteBlog(blogInfo._id)} type="button" className="btn btn-danger">Delete</button>
+                                </div>
                                 <div
                                     className="blog-content py-5 my-5"
                                     dangerouslySetInnerHTML={{ __html: blog }}
