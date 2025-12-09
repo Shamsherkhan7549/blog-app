@@ -47,7 +47,7 @@ const BlogDetails = () => {
     }, [id]);
 
     return (
-        <div className='contaner py-3'>
+        <div className='container py-3'>
             <div className="row">
                 <div className="col-1"></div>
                 {
