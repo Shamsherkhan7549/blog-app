@@ -5,7 +5,7 @@ const Navbar = () => {
     return (
 
         <>
-            <nav className="navbar navbar-expand-lg bg-body-tertiary">
+            <nav className="navbar navbar-expand-md sticky-top bg-body-tertiary">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/"> <img width={30} src="/chat-logo.svg" alt="logo"  /> </Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

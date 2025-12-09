@@ -73,13 +73,13 @@ const BlogDetails = () => {
                                 <strong>By: **{blogInfo.author}**</strong>
                                 </div>
                                
-                                <img className='blog-img' src={blogInfo.image} alt="blog_img" />
-                                <div className='buttons pt-3 d-flex gap-2 justify-content-end'>
+                                <img className='blog-img w-100 w-sm-75 rounded' src={blogInfo.image} alt="blog_img" />
+                                <div className='buttons py-5 d-flex gap-4'>
                                     <button onClick={()=>navigate(`/update-blog/${blogInfo._id}`)} type='button'  className="btn btn-primary ">Update</button>
                                     <button onClick={()=>handleDeleteBlog(blogInfo._id)} type="button" className="btn btn-danger">Delete</button>
                                 </div>
                                 <div
-                                    className="blog-content py-5 my-5"
+                                    className="blog-content "
                                     dangerouslySetInnerHTML={{ __html: blog }}
                                 ></div>
                                 

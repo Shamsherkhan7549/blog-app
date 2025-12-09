@@ -9,17 +9,6 @@
   text-align: justify;
 }
 
-.blog-img {
- width: 80%;
-  height: 400px;
-  border-radius: 8px;
-}
-
-.buttons{
- width: 80%;
-
-}
-
 .quill-display p {
   margin-bottom: 10px;
 }
