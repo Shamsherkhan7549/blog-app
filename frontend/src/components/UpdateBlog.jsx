@@ -15,7 +15,7 @@ export default function UpdateBlog() {
   const navigate = useNavigate();
   const quillRef = useRef(null);
 
-  const {id} = useParams();  
+  const { id } = useParams();
 
   // Image Upload Handler
   const handleImageUpload = async () => {
@@ -31,9 +31,10 @@ export default function UpdateBlog() {
       const formData = new FormData();
       formData.append("image", file);
 
-      const {data} = await axios.put(`${url}/api/blogs/${id}`, formData);
-      
-      if(data.success){
+      const { data } = await axios.post(`${url}/api/upload`, formData);
+      console.log(data);
+            
+      if (data.success) {
         const imageUrl = data.imageUrl;
         setImgUrl(imageUrl);
 
@@ -41,11 +42,11 @@ export default function UpdateBlog() {
         const quill = quillRef.current.getEditor();
         const range = quill.getSelection();
         quill.insertEmbed(range.index, "image", imageUrl);
-        
-      }else{
+
+      } else {
         console.log("problem in uploading image");
-        
-      }    
+
+      }
     };
   };
 
@@ -70,44 +71,44 @@ export default function UpdateBlog() {
   const handleSave = async () => {
     try {
       const blogPost = {
-      title,
-      content,
-      image: imgUrl
-    };    
+        title,
+        content,
+        image: imgUrl
+      };
 
-    const {data} = await axios.put(`${url}/api/blogs/${id}`, blogPost);        
-    if(data.success){
-      navigate('/');
-    }else{
-      alert("Blog Not saved!");
+      const { data } = await axios.put(`${url}/api/blogs/${id}`, blogPost);
+      if (data.success) {
+        navigate(`/blog/${data.data._id}`);
 
-    }
+      } else {
+        alert("Blog Not saved!");
+
+      }
     } catch (error) {
       console.error("Error saving blog post:", error);
       alert("Failed to save blog. Check console for details.");
-      
+
     }
   };
 
-   const callingBlogData = async() =>{
-    try {        
-        const {data} = await axios.get(`${url}/api/blogs/${id}`);
-        console.log(data);
-        if(data.success){
-          setTitle(data.data.title);
-          setContent(data.data.content);
-          setImgUrl(data.data.image);
-        }
-        
+  const callingBlogData = async () => {
+    try {
+      const { data } = await axios.get(`${url}/api/blogs/${id}`);
+      if (data.success) {
+        setTitle(data.data.title);
+        setContent(data.data.content);
+        setImgUrl(data.data.image);
+      }
+
     } catch (error) {
-        console.log("Update page error: " , error.message);
-        
+      console.log("Update page error: ", error.message);
+
     }
-   };
-   
- useEffect(() => {
+  };
+
+  useEffect(() => {
     callingBlogData();
- }, []);
+  }, []);
 
 
   return (

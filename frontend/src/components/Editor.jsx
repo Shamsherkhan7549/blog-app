@@ -73,7 +73,7 @@ export default function Editor() {
 
     const {data} = await axios.post(`${url}/api/blogs`, blogPost);    
     if(data.success){
-      navigate('/');
+      navigate(`/blog/${data.data._id}`);
     }else{
       alert("Blog Not saved!");
 
