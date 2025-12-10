@@ -7,10 +7,13 @@ import Contact from './pages/Contact/Contact.jsx'
 import Editor from './components/Editor.jsx'
 import BlogDetails from './components/BlogDetails.jsx'
 import UpdateBlog from './components/UpdateBlog.jsx'
+import { ToastContainer } from 'react-toastify';
+
 
 const App = () => {
   return (
     <Router>  
+      <ToastContainer />
       <Navbar />
       <Routes>
         <Route path='/' element={<Home/>} />

@@ -3,6 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
 import './BlogDetails.css'
+import HashLoader from "react-spinners/HashLoader";
+import { toast } from 'react-toastify';
+ 
 
 
 const url = import.meta.env.VITE_BACKEND_URL;
@@ -48,6 +51,7 @@ const BlogDetails = () => {
             const { data } = await axios.delete(`${url}/api/blogs/${blogId}`);
             if (data.success) {
                 navigate("/");
+                toast("Blog deleted successfully");
             }
         } catch (error) {
             console.error("Error deleting blog:", error);
@@ -57,7 +61,11 @@ const BlogDetails = () => {
 
 
     useEffect(() => {
-        fetchById(id)
+        const timer = setTimeout(()=>{
+            fetchById(id)
+        },2000);
+
+        return ()=> clearTimeout(timer);
     }, [id]);
 
     return (
@@ -87,7 +95,10 @@ const BlogDetails = () => {
                             </div>
                         )
 
-                        : <p>Loading</p>
+                        : (
+                             <HashLoader className='mx-auto my-5 py-5' color="#6af3da" />
+                        
+                        )
                 }
             </div>
         </div >

@@ -3,12 +3,13 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import HashLoader from "react-spinners/HashLoader";
 
 
 const url = import.meta.env.VITE_BACKEND_URL
 
 const Home = () => {
-  const [blogs, setBlogs] = useState([])
+  const [blogs, setBlogs] = useState()
 
   const apiCall = async () => {
     try {
@@ -24,9 +25,18 @@ const Home = () => {
     }
   }
 
+  
+
+  
   useEffect(() => {
-    apiCall();
-  }, []);
+    
+    const timer = setTimeout(()=>{
+      apiCall()
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [])
+ 
 
   const getPreviewText = (html) => {
     const tempDiv = document.createElement("div");
@@ -43,7 +53,7 @@ const Home = () => {
         
         {
 
-          blogs &&
+          blogs ? (
           blogs.map((blog) => (
 
             <div key={blog._id} className="card col-lg-3 col-sm-6 mx-auto my-3" style={{ width: "18rem" }}>
@@ -57,7 +67,9 @@ const Home = () => {
                 <Link className="btn btn-primary" to={`/blog/${blog._id}`}>View</Link>
               </div>
             </div>
-          ))
+          ))):(
+            <HashLoader className='mx-auto my-5 py-5' color="#6af3da" />
+          )
         }
 
       </div>

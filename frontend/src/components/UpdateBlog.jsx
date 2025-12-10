@@ -4,6 +4,8 @@ import "react-quill-new/dist/quill.snow.css";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import '../components/BlogDetails.css'
+import HashLoader from "react-spinners/HashLoader";
+import { toast } from "react-toastify";
 
 const url = import.meta.env.VITE_BACKEND_URL;
 
@@ -79,7 +81,8 @@ export default function UpdateBlog() {
       const { data } = await axios.put(`${url}/api/blogs/${id}`, blogPost);
       if (data.success) {
         navigate(`/blog/${data.data._id}`);
-
+        toast("blog updated successfully");
+        
       } else {
         alert("Blog Not saved!");
 
@@ -107,7 +110,11 @@ export default function UpdateBlog() {
   };
 
   useEffect(() => {
-    callingBlogData();
+    const timer = setTimeout(()=>{
+      callingBlogData();
+    }, 2000);
+
+    return ()=> clearTimeout(timer);
   }, []);
 
 
@@ -115,7 +122,9 @@ export default function UpdateBlog() {
     <div className="container py-5">
       <div className="row py-5">
         <div className="col-1"></div>
-        <div className="col-12 col-sm-10">
+        {
+          content ?(
+            <div className="col-12 col-sm-10">
           <h2>Write a New Blog</h2>
 
           {/* Title */}
@@ -159,6 +168,10 @@ export default function UpdateBlog() {
             ></div>
           )}
         </div>
+          ):(
+            <HashLoader className='mx-auto my-5 py-5' color="#6af3da" />
+          )
+        }
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
 const url = import.meta.env.VITE_BACKEND_URL;
 export default function Editor() {
   const [title, setTitle] = useState("");
@@ -27,9 +27,9 @@ export default function Editor() {
       const formData = new FormData();
       formData.append("image", file);
 
-      const {data} = await axios.post(`${url}/api/upload`, formData);
-      
-      if(data.success){
+      const { data } = await axios.post(`${url}/api/upload`, formData);
+
+      if (data.success) {
         const imageUrl = data.imageUrl;
         setImgUrl(imageUrl);
 
@@ -37,11 +37,11 @@ export default function Editor() {
         const quill = quillRef.current.getEditor();
         const range = quill.getSelection();
         quill.insertEmbed(range.index, "image", imageUrl);
-        
-      }else{
+
+      } else {
         console.log("problem in uploading image");
-        
-      }    
+
+      }
     };
   };
 
@@ -66,22 +66,25 @@ export default function Editor() {
   const handleSave = async () => {
     try {
       const blogPost = {
-      title,
-      content,
-      image: imgUrl
-    };    
+        title,
+        content,
+        image: imgUrl
+      };
 
-    const {data} = await axios.post(`${url}/api/blogs`, blogPost);    
-    if(data.success){
-      navigate(`/blog/${data.data._id}`);
-    }else{
-      alert("Blog Not saved!");
+      const { data } = await axios.post(`${url}/api/blogs`, blogPost);
+      if (data.success) {
+        navigate(`/blog/${data.data._id}`);
+        toast("Blog saved successfully");
+      } else {
+        toast("Blog not saved");
 
-    }
+
+      }
     } catch (error) {
       console.error("Error saving blog post:", error);
-      alert("Failed to save blog. Check console for details.");
-      
+      toast("Blog not saved");
+
+
     }
   };
 
