@@ -73,7 +73,7 @@ const BlogDetails = () => {
                                 <strong>By: **{blogInfo.author}**</strong>
                                 </div>
                                
-                                <img className='blog-img w-100 w-sm-75' src={blogInfo.image} alt="blog_img" />
+                                <img className='blog-img w-100 w-sm-75 rounded' src={blogInfo.image} alt="blog_img" />
                                 <div className='buttons pt-4 d-flex gap-2'>
                                     <button onClick={()=>navigate(`/update-blog/${blogInfo._id}`)} type='button'  className="btn btn-primary ">Update</button>
                                     <button onClick={()=>handleDeleteBlog(blogInfo._id)} type="button" className="btn btn-danger">Delete</button>
