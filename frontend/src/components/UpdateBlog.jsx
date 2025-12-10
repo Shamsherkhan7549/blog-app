@@ -125,7 +125,7 @@ export default function UpdateBlog() {
         {
           content ?(
             <div className="col-12 col-sm-10">
-          <h2>Write a New Blog</h2>
+          <h2>Update Blog</h2>
 
           {/* Title */}
           <input
