@@ -14,6 +14,7 @@ const Contact = () => {
     try {
       const res = await axios.post(`${url}/api/sendEmail`, {contactInfo});
       console.log(res);
+      setContactInfo({});
       
     } catch (error) {
       console.log(error);
